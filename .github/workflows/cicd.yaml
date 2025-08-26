@@ -37,5 +37,4 @@ jobs:
             -p 8000:8000 \
             --name fastapi-app-container \
             -e HF_TOKEN=${{ secrets.HF_TOKEN }} \
-            -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
             101bhuvan/fastapi-app:latest
