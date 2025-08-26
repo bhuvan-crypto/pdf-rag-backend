@@ -7,4 +7,4 @@ langchain-huggingface
 faiss-cpu
 huggingface_hub
 requests
-Gunicorn
+gunicorn
