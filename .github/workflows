@@ -1,0 +1,41 @@
+name: Deploy FastAPI Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-app:latest .
+
+      - name: Publish Image to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-app:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from Docker Hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-app:latest
+
+      - name: Delete old container (if exists)
+        run: docker rm -f fastapi-app-container || true
+
+      - name: Run Docker Container
+        run: |
+          docker run -d \
+            -p 8000:8000 \
+            --name fastapi-app-container \
+            -e HF_TOKEN=${{ secrets.HF_TOKEN }} \
+            -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
+            ${{ secrets.DOCKER_USERNAME }}/fastapi-app:latest
