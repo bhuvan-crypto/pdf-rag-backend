@@ -8,3 +8,4 @@ faiss-cpu
 huggingface_hub
 requests
 gunicorn
+langchain_community
