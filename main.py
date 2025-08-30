@@ -7,6 +7,7 @@ from langchain_huggingface import HuggingFaceEndpointEmbeddings,HuggingFaceEndpo
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEndpoint
 from langchain.prompts import PromptTemplate
+from fastapi.middleware.cors import CORSMiddleware
 
 import os
 import shutil
@@ -14,7 +15,18 @@ import shutil
 load_dotenv()
 
 app = FastAPI()
+origins = [
+    "https://bhuvan-se.duckdns.org",  # Add your frontend domain here
+    "http://localhost:3000",          # If testing locally
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,   # Allows specific origins
+    allow_credentials=True,
+    allow_methods=["*"],     # Allows all HTTP methods
+    allow_headers=["*"],     # Allows all headers
+)
 # Temporary global store (for demo)
 pdf_vector_db = None
 
