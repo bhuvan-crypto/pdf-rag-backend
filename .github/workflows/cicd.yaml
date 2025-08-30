@@ -34,6 +34,7 @@ jobs:
       - name: Run Docker Container
         run: |
           docker run -d \
+            --restart=always \
             -p 8000:8000 \
             --name fastapi-app-container \
             -e HF_TOKEN=${{ secrets.HF_TOKEN }} \
