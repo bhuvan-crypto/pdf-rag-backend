@@ -14,7 +14,8 @@ import shutil
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(root_path="/api-python")
+
 origins = [
     "https://bhuvan-se.duckdns.org",  # Add your frontend domain here
     "http://localhost:3000",          # If testing locally
