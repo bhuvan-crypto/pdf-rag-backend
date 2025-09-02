@@ -85,18 +85,29 @@ async def ask_basic(question: str):
                 repo_id="mistralai/Mistral-Nemo-Base-2407",
                 provider="novita",
                 do_sample=False,
-                huggingfacehub_api_token=os.getenv("HF_TOKEN")
+                huggingfacehub_api_token=os.getenv("HF_TOKEN"),
+                max_new_tokens=1024,   # new tokens beyond prompt
+                return_full_text=True,
             )
-        prompt_template = """Use the following pieces of context to answer the question at the end. Please follow the following rules:
-        1. If you don't know the answer, don't try to make up an answer. Just say "I can't find the final answer but you may want to check the following links".
-        2. If you find the answer, write the answer in a concise way with five sentences maximum.
+        prompt_template = """
+Use the following pieces of context to answer the question at the end.  
 
-        {context}
+Guidelines:
+1. If you don't know the answer, don't make it up. Just say: "I can't find the final answer but you may want to check the following links".
+2. If you find the answer, write a comprehensive explanation of at least 400 words.  
+3. Expand on the details, provide background information, and add clarifications where useful.  
+4. Structure the response with multiple paragraphs, and use bullet points or subheadings if helpful.  
+5. The goal is to give the user as much helpful and relevant information as possible.  
 
-        Question: {question}
+Context:
+{context}
 
-        Helpful Answer:
-        """
+Question: {question}
+
+Detailed Answer:
+"""
+
+
 
         PROMPT = PromptTemplate(
         template=prompt_template, input_variables=["context", "question"]
