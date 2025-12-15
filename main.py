@@ -1,12 +1,12 @@
 from fastapi import FastAPI, UploadFile, File
 from pypdf import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_huggingface import HuggingFaceEndpointEmbeddings,HuggingFaceEndpoint
 from dotenv import load_dotenv
 from langchain_huggingface import HuggingFaceEndpoint
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from fastapi.middleware.cors import CORSMiddleware
 
 import os
@@ -74,7 +74,6 @@ async def upload_pdf(file: UploadFile = File(...)):
 @app.post("/ask-basic/")
 async def ask_basic(question: str):
     global pdf_vector_db
-
     if pdf_vector_db is None:
         return {"error": "No PDF uploaded yet"}
     
