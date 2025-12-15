@@ -1,11 +1,8 @@
 fastapi==0.111.0
-# REMOVE: uvicorn
 pypdf
 python-dotenv
 langchain
 chromadb
-huggingface_hub
 requests
-# REMOVE: gunicorn
 langchain_community
 langchain-mistralai
