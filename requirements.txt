@@ -3,9 +3,9 @@ uvicorn
 pypdf
 python-dotenv
 langchain
-langchain-huggingface
-faiss-cpu
+chromadb
 huggingface_hub
 requests
 gunicorn
 langchain_community
+langchain-mistralai  # <-- NEW MISTRAL INTEGRATION
